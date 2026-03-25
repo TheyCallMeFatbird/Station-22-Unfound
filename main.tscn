@@ -1,0 +1,100 @@
+[gd_scene format=3 uid="uid://bm83i0ylw2tmg"]
+
+[ext_resource type="Script" uid="uid://bwxju1017efsc" path="res://ambient_sound.gd" id="1_h2yge"]
+[ext_resource type="Script" uid="uid://djpwpr07abxm2" path="res://player.gd" id="1_ig7tw"]
+[ext_resource type="AudioStream" uid="uid://de0n1ukbfwx1m" path="res://sounds/low-wind-blowing.mp3" id="2_0xm2m"]
+[ext_resource type="AudioStream" uid="uid://bbjrltu86ghek" path="res://sounds/metal-clang.mp3" id="4_1bvp3"]
+[ext_resource type="AudioStream" uid="uid://d2081sadqdn7r" path="res://sounds/flashlight-toggle.mp3" id="5_lquwl"]
+[ext_resource type="Script" uid="uid://bqd28w0obk2l3" path="res://flicker_light.gd" id="6_7mycd"]
+[ext_resource type="AudioStream" uid="uid://cteqr3j5qdd0b" path="res://sounds/light-humming.mp3" id="7_272bh"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_0xm2m"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h2yge"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1bvp3"]
+radius = 0.5527344
+height = 2.760254
+
+[sub_resource type="Environment" id="Environment_ig7tw"]
+ambient_light_color = Color(2.256129e-08, 0, 0.054544218, 1)
+fog_light_color = Color(2.5438607e-05, 0.0019163229, 0.042598672, 1)
+volumetric_fog_enabled = true
+volumetric_fog_albedo = Color(1.8049032e-08, 0, 0.03810654, 1)
+volumetric_fog_emission = Color(0, 0.015686275, 0.03137255, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ig7tw"]
+size = Vector3(0.1812439, 10.836243, 9.989563)
+
+[node name="Node3D" type="Node3D" unique_id=526012071]
+script = ExtResource("1_h2yge")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1775987811]
+transform = Transform3D(10.000864, 0, 0, 0, 0.066367045, 0, 0, 0, 10.913369, 0, -2.9901695, 0)
+mesh = SubResource("BoxMesh_0xm2m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D" unique_id=1473401615]
+shape = SubResource("BoxShape3D_h2yge")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=768261116]
+transform = Transform3D(8.677623, 0.03299124, -0.029825892, 0, -0.00036486678, -10.913204, -4.971533, 0.05758498, -0.05205998, -5.473493, -1.122776, -5.470628)
+mesh = SubResource("BoxMesh_0xm2m")
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=1950269996]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+script = ExtResource("1_ig7tw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=362545380]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38012695, 0)
+shape = SubResource("CapsuleShape3D_1bvp3")
+
+[node name="Sprite3D" type="Sprite3D" parent="Player" unique_id=1798580303]
+
+[node name="Camera3D" type="Camera3D" parent="Player" unique_id=920514046]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+
+[node name="Flashlight" type="SpotLight3D" parent="Player" unique_id=1426304573]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6553917, -0.41062164)
+light_color = Color(0.9137255, 1, 0.9372549, 1)
+light_energy = 6.0
+spot_range = 11.015916
+spot_angle = 17.0
+spot_angle_attenuation = 1.25
+
+[node name="FlashlightSound" type="AudioStreamPlayer3D" parent="Player" unique_id=381087654]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+stream = ExtResource("5_lquwl")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=985125726]
+environment = SubResource("Environment_ig7tw")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=440507935]
+transform = Transform3D(0.6039455, 0, -0.7970256, 0, 1, 0, 0.7970256, 0, 0.6039455, -1.4727731, 0.20936966, -7.076114)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1411243309]
+transform = Transform3D(0.99305415, 0, -0.117658705, 0, 1, 0, 0.117658705, 0, 0.99305415, -1.1306462, -1.2661438, 4.1122127)
+shape = SubResource("BoxShape3D_ig7tw")
+
+[node name="AmbientSound" type="AudioStreamPlayer3D" parent="." unique_id=1242876182]
+stream = ExtResource("2_0xm2m")
+attenuation_model = 3
+unit_size = 15.0
+autoplay = true
+parameters/looping = true
+
+[node name="CreepySound" type="AudioStreamPlayer3D" parent="." unique_id=673033787]
+stream = ExtResource("4_1bvp3")
+
+[node name="FlickerLight" type="OmniLight3D" parent="." unique_id=66663126]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.035668, 3.2245166, -6.1639695)
+light_color = Color(0.7728173, 0.97774416, 0.99999994, 1)
+light_energy = 3.0
+omni_range = 3.0
+script = ExtResource("6_7mycd")
+
+[node name="LightHummingSound" type="AudioStreamPlayer3D" parent="FlickerLight" unique_id=872547851]
+stream = ExtResource("7_272bh")
+max_db = 4.0
+autoplay = true
+max_distance = 3.0
+parameters/looping = true
