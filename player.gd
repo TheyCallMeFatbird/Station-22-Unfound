@@ -11,35 +11,19 @@ var rotation_x = 0.0
 func _ready():
 	if speed == null:
 		speed = 5.0
-	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	flashlight.visible = false
-	flicker_loop()
-
-func _process(_delta):
-	if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
-		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _input(event):
 	if event is InputEventMouseMotion:
-		# Horizontal rotation
 		rotate_y(-event.relative.x * mouse_sensitivity)
-		
-		# Vertical rotation
 		rotation_x -= event.relative.y * mouse_sensitivity
 		rotation_x = clamp(rotation_x, deg_to_rad(-80), deg_to_rad(80))
 		camera.rotation.x = rotation_x
-
 	if event.is_action_pressed("flashlight_toggle"):
 		flashlight.visible = !flashlight.visible
 		flashlight_sound.play()
 
-	if Input.is_action_just_pressed("flashlight_toggle"):
-		flashlight.visible = !flashlight.visible
-		flashlight_sound.play()
-
-func _physics_process(_delta):
+func _physics_process(delta):
 	var direction = Vector3.ZERO
 
 	if Input.is_action_pressed("move_forward"):
