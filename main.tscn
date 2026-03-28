@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bwxju1017efsc" path="res://ambient_sound.gd" id="1_h2yge"]
 [ext_resource type="AudioStream" uid="uid://de0n1ukbfwx1m" path="res://sounds/low-wind-blowing.mp3" id="2_0xm2m"]
-[ext_resource type="Script" uid="uid://bmds02p66utxq" path="res://footsteps.gd" id="2_7mycd"]
+[ext_resource type="Script" uid="uid://djpwpr07abxm2" path="res://player.gd" id="2_7mycd"]
 [ext_resource type="AudioStream" uid="uid://d2081sadqdn7r" path="res://sounds/flashlight-toggle.mp3" id="5_lquwl"]
 [ext_resource type="Script" uid="uid://bqd28w0obk2l3" path="res://flicker_light.gd" id="6_7mycd"]
 [ext_resource type="AudioStream" uid="uid://cteqr3j5qdd0b" path="res://sounds/light-humming.mp3" id="7_272bh"]
