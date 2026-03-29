@@ -1,7 +1,27 @@
 extends CharacterBody3D
 
-@export var speed = 5.0
+@export var walk_speed = 5.0
+@export var sprint_speed = 9.0
 @export var mouse_sensitivity = 0.004
+
+# Stamina
+@export var max_stamina = 100.0
+@export var stamina_drain = 25.0
+@export var stamina_regen = 15.0
+
+var stamina = 100.0
+var is_sprinting = false
+var stamina_depleted = false
+var vignette_intensity = 0.0
+var hud: CanvasLayer
+
+# Head bob
+var bob_timer = 0.0
+const BOB_FREQ_WALK = 2.0
+const BOB_FREQ_SPRINT = 3.2
+const BOB_AMP_Y = 0.08
+const BOB_AMP_X = 0.04
+var camera_default_y = 1.6
 
 @onready var flashlight = $Flashlight
 @onready var flashlight_sound = $FlashlightSound
@@ -12,6 +32,11 @@ var rotation_x = 0.0
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	flicker_loop()
+	call_deferred("_init_hud")
+	print("camera y: ", camera.position.y)
+
+func _init_hud():
+	hud = get_tree().get_root().get_node("Node3D/HUD")
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -27,7 +52,13 @@ func _input(event):
 		flashlight.visible = !flashlight.visible
 		flashlight_sound.play()
 
-func _physics_process(_delta):
+func _physics_process(delta):
+	handle_stamina(delta)
+	handle_movement(delta)
+	handle_head_bob(delta)
+	update_effects(delta)
+
+func get_input_direction() -> Vector3:
 	var direction = Vector3.ZERO
 	if Input.is_action_pressed("move_forward"):
 		direction -= transform.basis.z
@@ -37,10 +68,37 @@ func _physics_process(_delta):
 		direction -= transform.basis.x
 	if Input.is_action_pressed("move_right"):
 		direction += transform.basis.x
-	direction = direction.normalized()
-	velocity.x = direction.x * speed
-	velocity.z = direction.z * speed
+	return direction.normalized()
+
+func handle_stamina(delta):
+	var wants_sprint = Input.is_action_pressed("sprint")
+	var moving = get_input_direction().length() > 0
+
+	is_sprinting = wants_sprint and not stamina_depleted and moving and stamina > 0
+
+	if is_sprinting:
+		stamina -= stamina_drain * delta
+		stamina = max(stamina, 0.0)
+		if stamina == 0.0:
+			stamina_depleted = true
+	else:
+		stamina += stamina_regen * delta
+		stamina = min(stamina, max_stamina)
+		if stamina_depleted and stamina >= max_stamina:
+			stamina_depleted = false
+
+func handle_movement(_delta):
+	var direction = get_input_direction()
+	var current_speed = sprint_speed if is_sprinting else walk_speed
+	velocity.x = direction.x * current_speed
+	velocity.z = direction.z * current_speed
 	move_and_slide()
+
+func update_effects(delta):
+	if not hud:
+		return
+	var stamina_pct = stamina / max_stamina
+	vignette_intensity = hud.update_effects(stamina_pct, is_sprinting, delta, vignette_intensity)
 
 func flicker_loop():
 	while true:
@@ -50,3 +108,19 @@ func flicker_loop():
 			await get_tree().create_timer(0.03).timeout
 			flashlight.light_negative = false
 			await get_tree().create_timer(0.03).timeout
+
+func handle_head_bob(delta):
+	var moving = get_input_direction().length() > 0
+	bob_timer += delta * 2.0
+	camera.position.y = camera_default_y + sin(bob_timer * 2.0) * 0.5
+	print("cam y: ", camera.position.y, " bob_timer: ", bob_timer)
+
+	if moving:
+		var freq = BOB_FREQ_SPRINT if is_sprinting else BOB_FREQ_WALK
+		bob_timer += delta * freq
+		camera.position.y = camera_default_y + sin(bob_timer * 2.0) * BOB_AMP_Y
+		camera.position.x = cos(bob_timer) * BOB_AMP_X
+	else:
+		bob_timer = lerp(bob_timer, 0.0, delta * 6.0)
+		camera.position.y = camera_default_y + sin(bob_timer * 2.0) * BOB_AMP_Y
+		camera.position.x = cos(bob_timer) * BOB_AMP_X

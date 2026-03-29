@@ -3,9 +3,12 @@
 [ext_resource type="Script" uid="uid://bwxju1017efsc" path="res://ambient_sound.gd" id="1_h2yge"]
 [ext_resource type="AudioStream" uid="uid://de0n1ukbfwx1m" path="res://sounds/low-wind-blowing.mp3" id="2_0xm2m"]
 [ext_resource type="Script" uid="uid://djpwpr07abxm2" path="res://player.gd" id="2_7mycd"]
+[ext_resource type="Script" uid="uid://mtk3sq3dbtkl" path="res://hud.gd" id="3_kek77"]
 [ext_resource type="AudioStream" uid="uid://d2081sadqdn7r" path="res://sounds/flashlight-toggle.mp3" id="5_lquwl"]
 [ext_resource type="Script" uid="uid://bqd28w0obk2l3" path="res://flicker_light.gd" id="6_7mycd"]
+[ext_resource type="FontFile" uid="uid://vone0fx04o4k" path="res://fonts/Share_Tech_Mono/ShareTechMono-Regular.ttf" id="7_5vw27"]
 [ext_resource type="AudioStream" uid="uid://cteqr3j5qdd0b" path="res://sounds/light-humming.mp3" id="7_272bh"]
+[ext_resource type="PackedScene" uid="uid://b2blm2cib6oui" path="res://hud.tscn" id="8_5vw27"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_0xm2m"]
 
@@ -27,6 +30,9 @@ size = Vector3(0.1812439, 10.836243, 9.989563)
 
 [node name="Node3D" type="Node3D" unique_id=526012071]
 script = ExtResource("1_h2yge")
+
+[node name="HUD" parent="." unique_id=677149485 instance=ExtResource("8_5vw27")]
+script = ExtResource("3_kek77")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1775987811]
 transform = Transform3D(10.000864, 0, 0, 0, 0.066367045, 0, 0, 0, 10.913369, 0, -2.9901695, 0)
@@ -99,3 +105,11 @@ max_db = 4.0
 autoplay = true
 max_distance = 3.0
 parameters/looping = true
+
+[node name="Label3D" type="Label3D" parent="." unique_id=1641345771]
+transform = Transform3D(0.8367834, 0, 0.54753405, 0, 1, 0, -0.54753405, 0, 0.8367834, -5.647391, 2.034896, -5.29666)
+modulate = Color(0.56, 0, 0, 1)
+outline_modulate = Color(0, 0, 0, 0)
+text = "run"
+font = ExtResource("7_5vw27")
+font_size = 60
