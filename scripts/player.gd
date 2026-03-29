@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 @export var walk_speed = 5.0
 @export var sprint_speed = 9.0
+@export var jump_velocity = 4.5
 @export var mouse_sensitivity = 0.004
 
 # Stamina
@@ -23,6 +24,12 @@ const BOB_AMP_Y = 0.08
 const BOB_AMP_X = 0.04
 var camera_default_y = 1.6
 
+@onready var footsteps = $Footsteps
+@export var footstep_interval = 0.45
+@export var pitch_range = Vector2(0.9, 1.1)
+@export var volume_range_db = Vector2(-8, -4)
+var footstep_timer = 0.0
+
 @onready var flashlight = $Flashlight
 @onready var flashlight_sound = $FlashlightSound
 @onready var camera = $Camera3D
@@ -33,7 +40,7 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	flicker_loop()
 	call_deferred("_init_hud")
-	print("camera y: ", camera.position.y)
+	
 
 func _init_hud():
 	hud = get_tree().get_root().get_node("Node3D/HUD")
@@ -57,6 +64,7 @@ func _physics_process(delta):
 	handle_movement(delta)
 	handle_head_bob(delta)
 	update_effects(delta)
+	handle_footsteps(delta)
 
 func get_input_direction() -> Vector3:
 	var direction = Vector3.ZERO
@@ -87,9 +95,16 @@ func handle_stamina(delta):
 		if stamina_depleted and stamina >= max_stamina:
 			stamina_depleted = false
 
-func handle_movement(_delta):
+func handle_movement(delta):
 	var direction = get_input_direction()
 	var current_speed = sprint_speed if is_sprinting else walk_speed
+
+	if is_on_floor() and Input.is_action_just_pressed("jump"):
+		velocity.y = jump_velocity
+
+	if not is_on_floor():
+		velocity.y -= 9.8 * delta
+
 	velocity.x = direction.x * current_speed
 	velocity.z = direction.z * current_speed
 	move_and_slide()
@@ -111,16 +126,29 @@ func flicker_loop():
 
 func handle_head_bob(delta):
 	var moving = get_input_direction().length() > 0
-	bob_timer += delta * 2.0
-	camera.position.y = camera_default_y + sin(bob_timer * 2.0) * 0.5
-	print("cam y: ", camera.position.y, " bob_timer: ", bob_timer)
 
-	if moving:
+	if moving and is_on_floor():
 		var freq = BOB_FREQ_SPRINT if is_sprinting else BOB_FREQ_WALK
 		bob_timer += delta * freq
-		camera.position.y = camera_default_y + sin(bob_timer * 2.0) * BOB_AMP_Y
-		camera.position.x = cos(bob_timer) * BOB_AMP_X
 	else:
 		bob_timer = lerp(bob_timer, 0.0, delta * 6.0)
-		camera.position.y = camera_default_y + sin(bob_timer * 2.0) * BOB_AMP_Y
-		camera.position.x = cos(bob_timer) * BOB_AMP_X
+
+	camera.position.y = camera_default_y + sin(bob_timer * 2.0) * BOB_AMP_Y
+	camera.position.x = cos(bob_timer) * BOB_AMP_X
+
+func handle_footsteps(delta):
+	if get_input_direction().length() > 0 and is_on_floor():
+		footstep_timer -= delta
+		if footstep_timer <= 0:
+			play_footstep()
+			footstep_timer = footstep_interval / (1.5 if is_sprinting else 1.0)
+	else:
+		footstep_timer = 0.0
+
+func play_footstep():
+	footsteps.pitch_scale = randf_range(pitch_range.x, pitch_range.y)
+	footsteps.volume_db = randf_range(volume_range_db.x, volume_range_db.y)
+	var length = footsteps.stream.get_length()
+	if length > 0:
+		footsteps.seek(randf_range(0, length * 0.5))
+	footsteps.play()

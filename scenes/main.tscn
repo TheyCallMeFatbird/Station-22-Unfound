@@ -1,32 +1,28 @@
 [gd_scene format=3 uid="uid://bm83i0ylw2tmg"]
 
-[ext_resource type="Script" uid="uid://bwxju1017efsc" path="res://ambient_sound.gd" id="1_h2yge"]
+[ext_resource type="Script" uid="uid://bwxju1017efsc" path="res://scripts/ambient_sound.gd" id="1_h2yge"]
 [ext_resource type="AudioStream" uid="uid://de0n1ukbfwx1m" path="res://sounds/low-wind-blowing.mp3" id="2_0xm2m"]
-[ext_resource type="Script" uid="uid://djpwpr07abxm2" path="res://player.gd" id="2_7mycd"]
-[ext_resource type="Script" uid="uid://mtk3sq3dbtkl" path="res://hud.gd" id="3_kek77"]
+[ext_resource type="Script" uid="uid://djpwpr07abxm2" path="res://scripts/player.gd" id="2_7mycd"]
+[ext_resource type="Script" uid="uid://mtk3sq3dbtkl" path="res://scripts/hud.gd" id="3_kek77"]
 [ext_resource type="AudioStream" uid="uid://d2081sadqdn7r" path="res://sounds/flashlight-toggle.mp3" id="5_lquwl"]
-[ext_resource type="Script" uid="uid://bqd28w0obk2l3" path="res://flicker_light.gd" id="6_7mycd"]
+[ext_resource type="AudioStream" uid="uid://ntfcd7dstkar" path="res://sounds/metal-footstep.mp3" id="6_4c57u"]
+[ext_resource type="Script" uid="uid://bqd28w0obk2l3" path="res://scripts/flicker_light.gd" id="6_7mycd"]
 [ext_resource type="FontFile" uid="uid://vone0fx04o4k" path="res://fonts/Share_Tech_Mono/ShareTechMono-Regular.ttf" id="7_5vw27"]
 [ext_resource type="AudioStream" uid="uid://cteqr3j5qdd0b" path="res://sounds/light-humming.mp3" id="7_272bh"]
-[ext_resource type="PackedScene" uid="uid://b2blm2cib6oui" path="res://hud.tscn" id="8_5vw27"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_0xm2m"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_h2yge"]
+[ext_resource type="PackedScene" uid="uid://b2blm2cib6oui" path="res://scenes/hud.tscn" id="8_5vw27"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1bvp3"]
 radius = 0.5527344
 height = 2.760254
 
 [sub_resource type="Environment" id="Environment_ig7tw"]
-ambient_light_color = Color(2.256129e-08, 0, 0.054544218, 1)
-fog_light_color = Color(2.5438607e-05, 0.0019163229, 0.042598672, 1)
+ambient_light_color = Color(0, 0, 0.03, 1)
+fog_enabled = true
+fog_light_color = Color(0, 0, 0.043137256, 1)
 volumetric_fog_enabled = true
+volumetric_fog_density = 0.3
 volumetric_fog_albedo = Color(1.8049032e-08, 0, 0.03810654, 1)
 volumetric_fog_emission = Color(0, 0.015686275, 0.03137255, 1)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ig7tw"]
-size = Vector3(0.1812439, 10.836243, 9.989563)
 
 [node name="Node3D" type="Node3D" unique_id=526012071]
 script = ExtResource("1_h2yge")
@@ -34,19 +30,8 @@ script = ExtResource("1_h2yge")
 [node name="HUD" parent="." unique_id=677149485 instance=ExtResource("8_5vw27")]
 script = ExtResource("3_kek77")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1775987811]
-transform = Transform3D(10.000864, 0, 0, 0, 0.066367045, 0, 0, 0, 10.913369, 0, -2.9901695, 0)
-mesh = SubResource("BoxMesh_0xm2m")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D" unique_id=1473401615]
-shape = SubResource("BoxShape3D_h2yge")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=768261116]
-transform = Transform3D(8.677623, 0.03299124, -0.029825892, 0, -0.00036486678, -10.913204, -4.971533, 0.05758498, -0.05205998, -5.473493, -1.122776, -5.470628)
-mesh = SubResource("BoxMesh_0xm2m")
-
 [node name="Player" type="CharacterBody3D" parent="." unique_id=1950269996]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.2982122, 0)
 script = ExtResource("2_7mycd")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=362545380]
@@ -72,16 +57,10 @@ stream = ExtResource("5_lquwl")
 
 [node name="Footsteps" type="AudioStreamPlayer3D" parent="Player" unique_id=248984132]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+stream = ExtResource("6_4c57u")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=985125726]
 environment = SubResource("Environment_ig7tw")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=440507935]
-transform = Transform3D(0.6039455, 0, -0.7970256, 0, 1, 0, 0.7970256, 0, 0.6039455, -1.4727731, 0.20936966, -7.076114)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1411243309]
-transform = Transform3D(0.99305415, 0, -0.117658705, 0, 1, 0, 0.117658705, 0, 0.99305415, -1.1306462, -1.2661438, 4.1122127)
-shape = SubResource("BoxShape3D_ig7tw")
 
 [node name="AmbientSound" type="AudioStreamPlayer3D" parent="." unique_id=1242876182]
 stream = ExtResource("2_0xm2m")
@@ -106,10 +85,20 @@ autoplay = true
 max_distance = 3.0
 parameters/looping = true
 
-[node name="Label3D" type="Label3D" parent="." unique_id=1641345771]
+[node name="Text" type="Label3D" parent="." unique_id=1641345771]
 transform = Transform3D(0.8367834, 0, 0.54753405, 0, 1, 0, -0.54753405, 0, 0.8367834, -5.647391, 2.034896, -5.29666)
 modulate = Color(0.56, 0, 0, 1)
 outline_modulate = Color(0, 0, 0, 0)
 text = "run"
 font = ExtResource("7_5vw27")
 font_size = 60
+
+[node name="Floor" type="CSGBox3D" parent="." unique_id=305877844]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.07165527, 0)
+use_collision = true
+size = Vector3(10.33374, 0.04663086, 10.957031)
+
+[node name="Wall" type="CSGBox3D" parent="." unique_id=609510026]
+transform = Transform3D(0.85573477, 0, 0.51741487, 0, 1, 0, -0.51741487, 0, 0.85573477, -5.5373907, 0.4874878, -5.3921075)
+use_collision = true
+size = Vector3(9.779175, 7.2489014, 0.001)
