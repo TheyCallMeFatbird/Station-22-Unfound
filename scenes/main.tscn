@@ -25,6 +25,8 @@ volumetric_fog_density = 0.3
 volumetric_fog_albedo = Color(1.8049032e-08, 0, 0.03810654, 1)
 volumetric_fog_emission = Color(0, 0.015686275, 0.03137255, 1)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ya4ey"]
+
 [node name="Node3D" type="Node3D" unique_id=526012071]
 script = ExtResource("1_h2yge")
 
@@ -103,6 +105,7 @@ size = Vector3(10.33374, 0.04663086, 10.957031)
 transform = Transform3D(0.85573477, 0, 0.51741487, 0, 1, 0, -0.51741487, 0, 0.85573477, -5.5373907, 0.4874878, -5.3921075)
 use_collision = true
 size = Vector3(9.779175, 7.2489014, 0.001)
+material = SubResource("StandardMaterial3D_ya4ey")
 
 [node name="Label3D" type="Label3D" parent="." unique_id=1215400383]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9675474, 1.5882549, -6.074845)

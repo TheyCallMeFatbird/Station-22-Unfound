@@ -40,6 +40,7 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	flicker_loop()
 	call_deferred("_init_hud")
+	print("")
 	
 
 func _init_hud():
