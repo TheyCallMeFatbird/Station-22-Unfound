@@ -13,9 +13,9 @@ const CATEGORY_LABELS := {
 @onready var terminal_text: Label3D = $ReportTerminal/TerminalText
 @onready var player: CharacterBody3D = $"../Player"
 
-var anchors: Array = []
+var anchors: Array[Node] = []
 var baseline := {}
-var active_anomalies: Array = []
+var active_anomalies: Array[Node] = []
 var report_options := ["missing", "moved", "scaled", "tinted"]
 var report_index := 0
 var score := 0
@@ -24,7 +24,10 @@ var shift := 1
 var player_in_terminal := false
 
 func _ready():
-	anchors = get_tree().get_nodes_in_group("anomaly_anchor")
+	for node in get_tree().get_nodes_in_group("anomaly_anchor"):
+		var anchor := node as Node
+		if anchor:
+			anchors.append(anchor)
 	_cache_baseline()
 	terminal_area.body_entered.connect(_on_terminal_entered)
 	terminal_area.body_exited.connect(_on_terminal_exited)
@@ -48,7 +51,7 @@ func _process(_delta):
 func _cache_baseline():
 	baseline.clear()
 	for anchor in anchors:
-		var target := anchor.get_target()
+		var target: Node3D = _get_target_from_anchor(anchor)
 		if target == null:
 			continue
 		baseline[anchor] = {
@@ -62,12 +65,12 @@ func start_new_shift():
 	restore_baseline()
 	active_anomalies.clear()
 
-	var candidates: Array = anchors.duplicate()
+	var candidates: Array[Node] = anchors.duplicate()
 	candidates.shuffle()
 	for anchor in candidates:
 		if active_anomalies.size() >= anomalies_per_shift:
 			break
-		if anchor.get_target() == null:
+		if _get_target_from_anchor(anchor) == null:
 			continue
 		active_anomalies.append(anchor)
 		apply_anomaly(anchor)
@@ -75,8 +78,11 @@ func start_new_shift():
 	_update_terminal_text()
 
 func restore_baseline():
-	for anchor in baseline.keys():
-		var target := anchor.get_target()
+	for anchor_key in baseline.keys():
+		var anchor := anchor_key as Node
+		if anchor == null:
+			continue
+		var target: Node3D = _get_target_from_anchor(anchor)
 		if target == null:
 			continue
 		var data = baseline[anchor]
@@ -85,8 +91,8 @@ func restore_baseline():
 		target.visible = data["visible"]
 		_set_modulate(target, data["modulate"])
 
-func apply_anomaly(anchor):
-	var target := anchor.get_target()
+func apply_anomaly(anchor: Node):
+	var target: Node3D = _get_target_from_anchor(anchor)
 	if target == null:
 		return
 
@@ -102,7 +108,7 @@ func apply_anomaly(anchor):
 
 func submit_report(report_type: String):
 	for i in range(active_anomalies.size()):
-		var anchor = active_anomalies[i]
+		var anchor: Node = active_anomalies[i]
 		if anchor.anomaly_type == report_type:
 			score += 1
 			active_anomalies.remove_at(i)
@@ -156,3 +162,8 @@ func _set_modulate(target: Node3D, color: Color):
 		target.modulate = color
 	elif target is Light3D:
 		target.light_color = color
+
+func _get_target_from_anchor(anchor: Node) -> Node3D:
+	if anchor == null or not anchor.has_method("get_target"):
+		return null
+	return anchor.get_target() as Node3D

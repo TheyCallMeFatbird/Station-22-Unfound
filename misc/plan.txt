@@ -1,0 +1,73 @@
+**THE CORE FANTASY**
+
+You're a researcher. You're alone. You *know* something is wrong but you can't prove it yet — and the thing that's wrong is getting worse faster than you can document it.
+
+The horror isn't a monster. It's **the unknown becoming undeniable.**
+
+---
+
+**THE LOOP**
+
+Each "day" (your 6:00 clock cycle) you:
+- Explore the station
+- Observe and log anomalies
+- Return to the terminal and file a report
+- Sleep (transition) and wake up to a station that's *slightly more wrong*
+
+The anomalies escalate. Early days: a door that was closed is now open. A light that shouldn't be on, is. A coffee mug moved. Late days: geometry that shouldn't exist. Sounds from sealed rooms. Your *own previous reports* appearing altered.
+
+---
+
+**THE OBSERVE SYSTEM**
+
+You walk up to something suspicious and hit a key. Your character writes a field note — brief, clinical, researcher tone. You build a report from your notes and submit it at the terminal.
+
+The genius part: **you don't know what's an anomaly and what's just the base being a base.** You have to make judgment calls. False reports hurt you. Missing a real one also hurts you — because whatever's causing it goes unacknowledged and escalates harder.
+
+---
+
+**SANITY / TENSION**
+
+Instead of a health bar, you have a **Composure meter** (fits the researcher character better than "sanity"). 
+
+Composure drops from:
+- Filing incorrect reports
+- Witnessing severe anomalies without logging them
+- Spending too long in certain areas
+- The lights going out completely
+
+Composure affects:
+- Your field notes becoming less coherent (UI text starts glitching)
+- The vignette / panic pulses you already have
+- At very low composure — you start seeing things that *might not be there*. Are they anomalies? You don't know. Do you log them?
+
+---
+
+**THE TERMINAL**
+
+This is your anchor. Your safe(ish) spot. Each report you file goes... somewhere. You get terse, bureaucratic responses at first. "Report received. Standby." Then the responses start getting weird. Then they stop. Then they resume from a sender with a slightly different station ID.
+
+The terminal is also how you piece together **what actually happened in Greenland.** Fragments. Redacted files. Automated messages that were never meant to be seen.
+
+---
+
+**THE ESCALATION ARC**
+
+- **Days 1-2:** Subtle wrongness. You question yourself.
+- **Days 3-4:** Undeniable. The base is changing. Responses from outside get strange.
+- **Days 5-6:** The anomalies are *aware of you*. Escape becomes urgent.
+- **Ending:** Depends on report accuracy + composure. Multiple outcomes — extracted, lost, or something worse.
+
+---
+
+**WHY IT ALL FITS**
+
+- Your clock? It's the work day. It was always the work day.
+- Your flashlight? Researchers carry those in Antarctic facilities.
+- The flickering lights? Early anomaly.
+- The ambient creaking sounds? Could be the structure. Could be something else.
+- "Station 22 Unfound" — by the end, the player understands the title. Station 22 isn't missing. It's just... *not findable anymore.*
+
+---
+
+What do you want to build first — the Observe system, the terminal UI, or start defining what the actual anomalies look like?
