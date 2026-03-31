@@ -4,15 +4,14 @@
 [ext_resource type="AudioStream" uid="uid://de0n1ukbfwx1m" path="res://sounds/low-wind-blowing.mp3" id="2_0xm2m"]
 [ext_resource type="Script" uid="uid://djpwpr07abxm2" path="res://scripts/player.gd" id="2_7mycd"]
 [ext_resource type="Script" uid="uid://mtk3sq3dbtkl" path="res://scripts/hud.gd" id="3_kek77"]
-[ext_resource type="Script" uid="uid://dwjdvgb88yeox" path="res://scripts/anomaly_anchor.gd" id="4_anchor"]
 [ext_resource type="AudioStream" uid="uid://d2081sadqdn7r" path="res://sounds/flashlight-toggle.mp3" id="5_lquwl"]
 [ext_resource type="AudioStream" uid="uid://ntfcd7dstkar" path="res://sounds/metal-footstep.mp3" id="6_4c57u"]
 [ext_resource type="Script" uid="uid://bqd28w0obk2l3" path="res://scripts/flicker_light.gd" id="6_7mycd"]
 [ext_resource type="FontFile" uid="uid://vone0fx04o4k" path="res://fonts/Share_Tech_Mono/ShareTechMono-Regular.ttf" id="7_5vw27"]
 [ext_resource type="AudioStream" uid="uid://cteqr3j5qdd0b" path="res://sounds/light-humming.mp3" id="7_272bh"]
 [ext_resource type="PackedScene" uid="uid://b2blm2cib6oui" path="res://scenes/hud.tscn" id="8_5vw27"]
-[ext_resource type="Script" uid="uid://cm6pk1c8t3jkf" path="res://scripts/anomaly_manager.gd" id="9_manager"]
-[ext_resource type="Script" uid="uid://bjl5j1hmlueqb" path="res://scenes/clock.gd" id="11_ya4ey"]
+[ext_resource type="Script" uid="uid://bjl5j1hmlueqb" path="res://scripts/clock.gd" id="11_ya4ey"]
+[ext_resource type="Script" uid="uid://buwap18v7rue4" path="res://scripts/degredation.gd" id="12_eb6dy"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1bvp3"]
 radius = 0.5527344
@@ -29,14 +28,61 @@ volumetric_fog_emission = Color(0, 0.015686275, 0.03137255, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ya4ey"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_terminal"]
-size = Vector3(2.5, 2, 1.8)
+[sub_resource type="BoxShape3D" id="BoxShape3D_trceg"]
+size = Vector3(212.52051, 0.32861328, 223.26367)
 
 [node name="Node3D" type="Node3D" unique_id=526012071]
 script = ExtResource("1_h2yge")
 
 [node name="HUD" parent="." unique_id=677149485 instance=ExtResource("8_5vw27")]
 script = ExtResource("3_kek77")
+
+[node name="NotePrompt" type="CanvasLayer" parent="HUD" unique_id=601359416]
+
+[node name="Panel" type="Panel" parent="HUD/NotePrompt" unique_id=317071869]
+custom_minimum_size = Vector2(300, 80)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/NotePrompt/Panel" unique_id=1717449755]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="HUD/NotePrompt/Panel/VBoxContainer" unique_id=1781417744]
+layout_mode = 2
+text = "OBSERVATION"
+
+[node name="LineEdit" type="LineEdit" parent="HUD/NotePrompt/Panel/VBoxContainer" unique_id=840949303]
+layout_mode = 2
+
+[node name="JournalPanel" type="CanvasLayer" parent="HUD" unique_id=496767224]
+visible = false
+
+[node name="Panel" type="Panel" parent="HUD/JournalPanel" unique_id=610715886]
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HUD/JournalPanel/Panel" unique_id=69332420]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBox" type="VBoxContainer" parent="HUD/JournalPanel/Panel/ScrollContainer" unique_id=1049178932]
+layout_mode = 2
 
 [node name="Player" type="CharacterBody3D" parent="." unique_id=1950269996]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.2982122, 0)
@@ -119,45 +165,12 @@ font = ExtResource("7_5vw27")
 font_size = 62
 script = ExtResource("11_ya4ey")
 
-[node name="AnomalyManager" type="Node3D" parent="." unique_id=1335204795]
-script = ExtResource("9_manager")
+[node name="Degredation3D" type="Area3D" parent="." unique_id=164388820]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7.4356203, 0)
+script = ExtResource("12_eb6dy")
 
-[node name="ReportTerminal" type="Node3D" parent="AnomalyManager" unique_id=313214189]
-transform = Transform3D(0.00117803, 0, 0.9999993, 0, 1, 0, -0.9999993, 0, 0.00117803, 3.57026, 1.12058, 0.450261)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Degredation3D" unique_id=106469307]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.54081535, 0)
+shape = SubResource("BoxShape3D_trceg")
 
-[node name="Area3D" type="Area3D" parent="AnomalyManager/ReportTerminal" unique_id=272818776]
-collision_layer = 8
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AnomalyManager/ReportTerminal/Area3D" unique_id=763209092]
-shape = SubResource("BoxShape3D_terminal")
-
-[node name="TerminalText" type="Label3D" parent="AnomalyManager/ReportTerminal" unique_id=1947145412]
-transform = Transform3D(0.910827, 0, -0.412786, 0, 1, 0, 0.412786, 0, 0.910827, -0.0451503, 0.624417, 0)
-text = "Report Terminal
-Walk into range to use"
-font = ExtResource("7_5vw27")
-font_size = 20
-line_spacing = 6.0
-
-[node name="Anchor_TextMoved" type="Marker3D" parent="AnomalyManager" unique_id=32217839]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.64739, 2.0349, -5.29666)
-script = ExtResource("4_anchor")
-target_path = NodePath("../../Text")
-anomaly_type = "moved"
-
-[node name="Anchor_WallMissing" type="Marker3D" parent="AnomalyManager" unique_id=1591784973]
-transform = Transform3D(0.855735, 0, 0.517415, 0, 1, 0, -0.517415, 0, 0.855735, -5.53739, 0.487488, -5.39211)
-script = ExtResource("4_anchor")
-target_path = NodePath("../../Wall")
-
-[node name="Anchor_FlickerTinted" type="Marker3D" parent="AnomalyManager" unique_id=493382196]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.03567, 3.22452, -6.16397)
-script = ExtResource("4_anchor")
-target_path = NodePath("../../FlickerLight")
-anomaly_type = "tinted"
-
-[node name="Anchor_FloorScaled" type="Marker3D" parent="AnomalyManager" unique_id=2012115291]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0716553, 0)
-script = ExtResource("4_anchor")
-target_path = NodePath("../../Floor")
-anomaly_type = "scaled"
+[connection signal="text_submitted" from="HUD/NotePrompt/Panel/VBoxContainer/LineEdit" to="HUD" method="_on_note_confirmed"]

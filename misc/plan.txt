@@ -67,7 +67,3 @@ The terminal is also how you piece together **what actually happened in Greenlan
 - The flickering lights? Early anomaly.
 - The ambient creaking sounds? Could be the structure. Could be something else.
 - "Station 22 Unfound" — by the end, the player understands the title. Station 22 isn't missing. It's just... *not findable anymore.*
-
----
-
-What do you want to build first — the Observe system, the terminal UI, or start defining what the actual anomalies look like?

@@ -59,6 +59,12 @@ func _input(event):
 	if event.is_action_pressed("flashlight_toggle"):
 		flashlight.visible = !flashlight.visible
 		flashlight_sound.play()
+		
+	if event.is_action_pressed("journal"):
+		hud.toggle_journal()
+
+	if event.is_action_pressed("ui_cancel") and hud.prompt_open:
+		hud.close_note_prompt()
 
 func _physics_process(delta):
 	handle_stamina(delta)
@@ -78,6 +84,7 @@ func get_input_direction() -> Vector3:
 	if Input.is_action_pressed("move_right"):
 		direction += transform.basis.x
 	return direction.normalized()
+
 
 func handle_stamina(delta):
 	var wants_sprint = Input.is_action_pressed("sprint")
