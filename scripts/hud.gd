@@ -34,13 +34,23 @@ func _ready():
 	btn_missing.pressed.connect(_on_anomaly_selected.bind("ABSENCE — object or fixture unaccounted for."))
 	btn_visual.pressed.connect(_on_anomaly_selected.bind("VISUAL ANOMALY — unexplained phenomenon observed."))
 	btn_doc.pressed.connect(_on_anomaly_selected.bind("DOCUMENTATION — record appears altered or misplaced."))
+	call_deferred("_init_clipboard")
+
+func _init_clipboard():
 	var player = get_tree().get_root().get_node_or_null("Node3D/Player")
+	print("player: ", player)
 	if player:
 		clipboard_mesh = player.get_node_or_null("Camera3D/Clipboard")
+		print("clipboard_mesh: ", clipboard_mesh)
 	if clipboard_mesh:
 		clipboard_text = clipboard_mesh.get_node_or_null("ClipboardText")
+		print("clipboard_text: ", clipboard_text)
 
 func _on_anomaly_selected(text: String):
+	var sound = preload("res://sounds/scribble.mp3")
+	sound.stream = sound
+	sound.play()
+	print("clipboard_text at select time: ", clipboard_text)
 	note_input.text = text
 	note_input.grab_focus()
 	note_input.caret_column = text.length()
@@ -120,6 +130,9 @@ func _on_note_confirmed(text: String):
 func close_note_prompt():
 	if clipboard_mesh:
 		clipboard_mesh.visible = false
+		if clipboard_text:
+			clipboard_text.text = ""
+	
 	prompt_open = false
 	#note_prompt.visible = false
 	anomaly_picker.visible = false
