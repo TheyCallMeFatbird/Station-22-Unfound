@@ -1,6 +1,18 @@
 [gd_scene format=3 uid="uid://b2blm2cib6oui"]
 
 [ext_resource type="Shader" uid="uid://cmd8hb24dhioj" path="res://misc/vignette.gdshader" id="1_37p78"]
+[ext_resource type="Texture2D" uid="uid://txbfmw8og24k" path="res://textures/sprite_10.png" id="2_5n1hp"]
+[ext_resource type="Texture2D" uid="uid://6vr0qlv37hpb" path="res://textures/sprite_11.png" id="3_eld54"]
+[ext_resource type="Texture2D" uid="uid://bhep5k3xcfluf" path="res://textures/sprite_00.png" id="4_3swnk"]
+[ext_resource type="Texture2D" uid="uid://brvq1lhwh8ygc" path="res://textures/sprite_01.png" id="5_qkknv"]
+[ext_resource type="Texture2D" uid="uid://bjoymggxefs0w" path="res://textures/sprite_08.png" id="6_uxdf7"]
+[ext_resource type="Texture2D" uid="uid://ch1hj2c5iiws0" path="res://textures/sprite_09.png" id="7_5357l"]
+[ext_resource type="Texture2D" uid="uid://dpm3dk7so0agd" path="res://textures/sprite_02.png" id="8_iypfu"]
+[ext_resource type="Texture2D" uid="uid://bsce3u5h2dc4t" path="res://textures/sprite_03.png" id="9_qpprf"]
+[ext_resource type="Texture2D" uid="uid://b5yloaxi56nad" path="res://textures/sprite_04.png" id="10_3xg78"]
+[ext_resource type="Texture2D" uid="uid://5p05qqpaja40" path="res://textures/sprite_05.png" id="11_48y67"]
+[ext_resource type="Texture2D" uid="uid://c2nojgxeg5jln" path="res://textures/sprite_06.png" id="12_084dp"]
+[ext_resource type="Texture2D" uid="uid://b31fanireptqu" path="res://textures/sprite_07.png" id="13_y2nlu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_37p78"]
 shader = ExtResource("1_37p78")
@@ -130,55 +142,62 @@ offset_bottom = 40.0
 [node name="VBox" type="VBoxContainer" parent="JournalPanel/Panel/ScrollContainer" unique_id=1049178932]
 layout_mode = 2
 
+[node name="Scribble" type="AudioStreamPlayer3D" parent="." unique_id=1822082281]
+
 [node name="AnomalyPicker" type="CanvasLayer" parent="." unique_id=444444444]
 visible = false
 
-[node name="ButtonRow" type="HBoxContainer" parent="AnomalyPicker" unique_id=555555555]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -48.0
-offset_top = -70.0
-offset_right = 48.0
-offset_bottom = -58.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_constants/separation = 2
+[node name="ButtonGrid" type="GridContainer" parent="AnomalyPicker" unique_id=555555555]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 4.0
+offset_top = -24.0
+offset_right = 40.0
+offset_bottom = 24.0
+grow_vertical = 2
+theme_override_constants/h_separation = 2
+theme_override_constants/v_separation = 2
+columns = 2
 
-[node name="BtnLight" type="Button" parent="AnomalyPicker/ButtonRow" unique_id=600000001]
-custom_minimum_size = Vector2(14, 14)
+[node name="BtnLight" type="TextureButton" parent="AnomalyPicker/ButtonGrid" unique_id=600000001]
+custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
-theme_override_font_sizes/font_size = 6
-text = "L"
+texture_normal = ExtResource("2_5n1hp")
+texture_pressed = ExtResource("3_eld54")
+texture_hover = ExtResource("3_eld54")
 
-[node name="BtnMoved" type="Button" parent="AnomalyPicker/ButtonRow" unique_id=600000002]
-custom_minimum_size = Vector2(14, 14)
+[node name="BtnMoved" type="TextureButton" parent="AnomalyPicker/ButtonGrid" unique_id=600000002]
+custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
-theme_override_font_sizes/font_size = 6
-text = "M"
+texture_normal = ExtResource("4_3swnk")
+texture_pressed = ExtResource("5_qkknv")
+texture_hover = ExtResource("5_qkknv")
 
-[node name="BtnSound" type="Button" parent="AnomalyPicker/ButtonRow" unique_id=600000003]
-custom_minimum_size = Vector2(14, 14)
+[node name="BtnSound" type="TextureButton" parent="AnomalyPicker/ButtonGrid" unique_id=600000003]
+custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
-theme_override_font_sizes/font_size = 6
-text = "S"
+texture_normal = ExtResource("6_uxdf7")
+texture_pressed = ExtResource("7_5357l")
+texture_hover = ExtResource("7_5357l")
 
-[node name="BtnMissing" type="Button" parent="AnomalyPicker/ButtonRow" unique_id=600000004]
-custom_minimum_size = Vector2(14, 14)
+[node name="BtnMissing" type="TextureButton" parent="AnomalyPicker/ButtonGrid" unique_id=600000004]
+custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
-theme_override_font_sizes/font_size = 6
-text = "X"
+texture_normal = ExtResource("8_iypfu")
+texture_pressed = ExtResource("9_qpprf")
+texture_hover = ExtResource("9_qpprf")
 
-[node name="BtnVisual" type="Button" parent="AnomalyPicker/ButtonRow" unique_id=600000005]
-custom_minimum_size = Vector2(14, 14)
+[node name="BtnVisual" type="TextureButton" parent="AnomalyPicker/ButtonGrid" unique_id=600000005]
+custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
-theme_override_font_sizes/font_size = 6
-text = "V"
+texture_normal = ExtResource("10_3xg78")
+texture_pressed = ExtResource("11_48y67")
+texture_hover = ExtResource("11_48y67")
 
-[node name="BtnDoc" type="Button" parent="AnomalyPicker/ButtonRow" unique_id=600000006]
-custom_minimum_size = Vector2(14, 14)
+[node name="BtnDoc" type="TextureButton" parent="AnomalyPicker/ButtonGrid" unique_id=600000006]
+custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
-theme_override_font_sizes/font_size = 6
-text = "D"
+texture_normal = ExtResource("12_084dp")
+texture_pressed = ExtResource("13_y2nlu")
+texture_hover = ExtResource("13_y2nlu")

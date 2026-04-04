@@ -33,6 +33,14 @@ volumetric_fog_emission = Color(0, 0.015686275, 0.03137255, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_trceg"]
 size = Vector3(212.52051, 0.32861328, 223.26367)
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_a8y0u"]
+radius = 0.6054343
+
+[sub_resource type="SphereMesh" id="SphereMesh_jkv2x"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jbj1t"]
+albedo_color = Color(0.43725526, 2.4209769e-05, 0.35115698, 1)
+
 [node name="Node3D" type="Node3D" unique_id=526012071]
 script = ExtResource("1_h2yge")
 
@@ -97,6 +105,8 @@ unit_size = 15.0
 autoplay = true
 parameters/looping = true
 
+[node name="Scribble" type="AudioStreamPlayer3D" parent="." unique_id=74681825]
+
 [node name="CreepySound" type="AudioStreamPlayer3D" parent="." unique_id=673033787]
 
 [node name="FlickerLight" type="OmniLight3D" parent="." unique_id=66663126]
@@ -146,3 +156,20 @@ script = ExtResource("12_eb6dy")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Degredation3D" unique_id=106469307]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.54081535, 0)
 shape = SubResource("BoxShape3D_trceg")
+
+[node name="Evil Grape" type="RigidBody3D" parent="." unique_id=147959151]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.214002, 0, -2.2920375)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Evil Grape" unique_id=272025752]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96695554, 0)
+shape = SubResource("SphereShape3D_a8y0u")
+
+[node name="Label3D" type="Label3D" parent="Evil Grape" unique_id=1156007890]
+transform = Transform3D(-0.03613786, 0, -0.9993468, 0, 1, 0, 0.9993468, 0, -0.03613786, -0.027845383, 1.7863097, 0)
+billboard = 1
+text = "evil grape"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Evil Grape" unique_id=475411098]
+transform = Transform3D(1.2166264, 0, 0, 0, 1.1894588, 0, 0, 0, 1.2066475, 0, 0.96908534, 0)
+mesh = SubResource("SphereMesh_jkv2x")
+surface_material_override/0 = SubResource("StandardMaterial3D_jbj1t")

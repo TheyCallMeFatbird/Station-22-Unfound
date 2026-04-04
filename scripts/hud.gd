@@ -5,6 +5,8 @@ extends CanvasLayer
 @onready var blur_overlay: ColorRect = $BlurOverlay
 @onready var stamina_bar: TextureProgressBar = $StaminaBar
 
+@onready var scribble = $Scribble
+
 @onready var note_prompt = $NotePrompt
 @onready var note_input: LineEdit = $NotePrompt/ClipboardBG/NoteInput
 @onready var note_timestamp: Label = $NotePrompt/ClipboardBG/Timestamp
@@ -12,12 +14,12 @@ extends CanvasLayer
 @onready var journal_list: VBoxContainer = $JournalPanel/Panel/ScrollContainer/VBox
 
 @onready var anomaly_picker = $AnomalyPicker
-@onready var btn_light = $AnomalyPicker/ButtonRow/BtnLight
-@onready var btn_moved = $AnomalyPicker/ButtonRow/BtnMoved
-@onready var btn_sound = $AnomalyPicker/ButtonRow/BtnSound
-@onready var btn_missing = $AnomalyPicker/ButtonRow/BtnMissing
-@onready var btn_visual = $AnomalyPicker/ButtonRow/BtnVisual
-@onready var btn_doc = $AnomalyPicker/ButtonRow/BtnDoc
+@onready var btn_light = $AnomalyPicker/ButtonGrid/BtnLight
+@onready var btn_moved = $AnomalyPicker/ButtonGrid/BtnMoved
+@onready var btn_sound = $AnomalyPicker/ButtonGrid/BtnSound
+@onready var btn_missing = $AnomalyPicker/ButtonGrid/BtnMissing
+@onready var btn_visual = $AnomalyPicker/ButtonGrid/BtnVisual
+@onready var btn_doc = $AnomalyPicker/ButtonGrid/BtnDoc
 var clipboard_mesh: Sprite3D = null
 
 var panic_pulse_time = 0.0
@@ -38,24 +40,26 @@ func _ready():
 
 func _init_clipboard():
 	var player = get_tree().get_root().get_node_or_null("Node3D/Player")
-	print("player: ", player)
+	#print("player: ", player)
 	if player:
 		clipboard_mesh = player.get_node_or_null("Camera3D/Clipboard")
-		print("clipboard_mesh: ", clipboard_mesh)
+		#print("clipboard_mesh: ", clipboard_mesh)
 	if clipboard_mesh:
 		clipboard_text = clipboard_mesh.get_node_or_null("ClipboardText")
-		print("clipboard_text: ", clipboard_text)
+		#print("clipboard_text: ", clipboard_text)
 
 func _on_anomaly_selected(text: String):
 	var sound = preload("res://sounds/scribble.mp3")
-	sound.stream = sound
-	sound.play()
-	print("clipboard_text at select time: ", clipboard_text)
+	scribble.stream = sound
+	scribble.play()
+	#print("clipboard_text at select time: ", clipboard_text)
 	note_input.text = text
 	note_input.grab_focus()
 	note_input.caret_column = text.length()
 	if clipboard_text:
 		clipboard_text.text = text
+	await get_tree().create_timer(1.5).timeout
+	close_note_prompt()
 
 func _build_bar_texture():
 	var w = 50
