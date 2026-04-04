@@ -9,7 +9,9 @@ func _ready():
 
 func _input(event):
 	if event.is_action_pressed("observe"):
-		get_tree().get_root().get_node("Node3D/HUD").open_note_prompt()
+		var hud = get_tree().get_root().get_node_or_null("Node3D/HUD")
+		if hud and not hud.prompt_open and not hud.journal_open:
+			hud.open_note_prompt()
 
 func add_entry(note_text: String, timestamp: String):
 	entries.append({

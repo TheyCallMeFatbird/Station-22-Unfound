@@ -34,13 +34,17 @@ var footstep_timer = 0.0
 @onready var flashlight_sound = $FlashlightSound
 @onready var camera = $Camera3D
 
+var movement_locked := false
+var slowdown_timer := 0.0
+const POST_OBSERVE_SLOWDOWN := 1.2  # seconds
+
 var rotation_x = 0.0
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	flicker_loop()
 	call_deferred("_init_hud")
-	print("sup!")
+	print("el horror is ready")
 	
 
 func _init_hud():
@@ -67,6 +71,9 @@ func _input(event):
 		hud.close_note_prompt()
 
 func _physics_process(delta):
+	if slowdown_timer > 0.0:
+		slowdown_timer -= delta
+	
 	handle_stamina(delta)
 	handle_movement(delta)
 	handle_head_bob(delta)
@@ -104,12 +111,20 @@ func handle_stamina(delta):
 			stamina_depleted = false
 
 func handle_movement(delta):
+	if movement_locked:
+		velocity.x = 0
+		velocity.z = 0
+		move_and_slide()
+		return
+
 	var direction = get_input_direction()
-	var current_speed = sprint_speed if is_sprinting else walk_speed
+	var speed_mult = lerp(0.3, 1.0, min(slowdown_timer / POST_OBSERVE_SLOWDOWN, 1.0))
+	# invert: full slowdown at timer start, normal at 0
+	speed_mult = lerp(1.0, 0.3, slowdown_timer / POST_OBSERVE_SLOWDOWN)
+	var current_speed = (sprint_speed if is_sprinting else walk_speed) * speed_mult
 
 	if is_on_floor() and Input.is_action_just_pressed("jump"):
 		velocity.y = jump_velocity
-
 	if not is_on_floor():
 		velocity.y -= 9.8 * delta
 

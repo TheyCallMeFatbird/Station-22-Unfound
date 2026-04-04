@@ -5,7 +5,6 @@
 [ext_resource type="Script" uid="uid://djpwpr07abxm2" path="res://scripts/player.gd" id="2_7mycd"]
 [ext_resource type="Script" uid="uid://mtk3sq3dbtkl" path="res://scripts/hud.gd" id="3_kek77"]
 [ext_resource type="AudioStream" uid="uid://d2081sadqdn7r" path="res://sounds/flashlight-toggle.mp3" id="5_lquwl"]
-[ext_resource type="Texture2D" uid="uid://bi4ehgisl3xbe" path="res://textures/icon.svg" id="5_trceg"]
 [ext_resource type="AudioStream" uid="uid://ntfcd7dstkar" path="res://sounds/metal-footstep.mp3" id="6_4c57u"]
 [ext_resource type="Script" uid="uid://bqd28w0obk2l3" path="res://scripts/flicker_light.gd" id="6_7mycd"]
 [ext_resource type="FontFile" uid="uid://vone0fx04o4k" path="res://fonts/Share_Tech_Mono/ShareTechMono-Regular.ttf" id="7_5vw27"]
@@ -38,6 +37,60 @@ script = ExtResource("1_h2yge")
 [node name="HUD" parent="." unique_id=677149485 instance=ExtResource("8_5vw27")]
 script = ExtResource("3_kek77")
 
+[node name="NotePrompt" type="CanvasLayer" parent="HUD" unique_id=601359416]
+visible = false
+
+[node name="ClipboardBG" type="ColorRect" parent="HUD/NotePrompt" unique_id=317071869]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -45.0
+offset_top = -58.0
+offset_right = 45.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.78, 0.74, 0.62, 0.95)
+
+[node name="ClipBar" type="ColorRect" parent="HUD/NotePrompt/ClipboardBG" unique_id=111111111]
+layout_mode = 0
+anchor_right = 1.0
+offset_bottom = 6.0
+color = Color(0.35, 0.32, 0.25, 1)
+
+[node name="Timestamp" type="Label" parent="HUD/NotePrompt/ClipboardBG" unique_id=222222222]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 8.0
+offset_right = 86.0
+offset_bottom = 18.0
+theme_override_colors/font_color = Color(0.3, 0.3, 0.2, 1)
+theme_override_font_sizes/font_size = 6
+text = "??:??"
+
+[node name="NoteInput" type="LineEdit" parent="HUD/NotePrompt/ClipboardBG" unique_id=840949303]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 18.0
+offset_right = 87.0
+offset_bottom = 32.0
+theme_override_colors/font_color = Color(0.15, 0.15, 0.1, 1)
+theme_override_colors/font_placeholder_color = Color(0.5, 0.48, 0.38, 0.6)
+theme_override_font_sizes/font_size = 7
+placeholder_text = "note observation..."
+
+[node name="HintLabel" type="Label" parent="HUD/NotePrompt/ClipboardBG" unique_id=333333333]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 36.0
+offset_right = 86.0
+offset_bottom = 46.0
+theme_override_colors/font_color = Color(0.4, 0.38, 0.28, 0.8)
+theme_override_font_sizes/font_size = 5
+text = "[ENTER] confirm  [ESC] cancel"
+
 [node name="Player" type="CharacterBody3D" parent="." unique_id=1950269996]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.2982122, 0)
 script = ExtResource("2_7mycd")
@@ -51,24 +104,8 @@ shape = SubResource("CapsuleShape3D_1bvp3")
 [node name="Camera3D" type="Camera3D" parent="Player" unique_id=920514046]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 
-[node name="Clipboard" type="Sprite3D" parent="Player/Camera3D" unique_id=1533515308]
-transform = Transform3D(0.9854789, -0.06802106, -0.1555775, 0.052049253, 0.9931589, -0.10452846, 0.16162331, 0.094912894, 0.9822777, 0.06, -0.07, -0.18)
-pixel_size = 0.0005
-texture = ExtResource("5_trceg")
-
-[node name="Label3D" type="Label3D" parent="Player/Camera3D/Clipboard" unique_id=1827027325]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.025)
-pixel_size = 0.0005
-offset = Vector2(0.01, 0)
-modulate = Color(0.14, 0.051333334, 0, 1)
-text = "n"
-font_size = 4
-autowrap_mode = 2
-width = 80.0
-
 [node name="Flashlight" type="SpotLight3D" parent="Player" unique_id=1426304573]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6553917, -0.41062164)
-visible = false
 light_color = Color(0.9137255, 1, 0.9372549, 1)
 light_energy = 6.0
 spot_range = 11.015916

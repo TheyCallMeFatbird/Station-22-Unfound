@@ -56,3 +56,129 @@ offset_bottom = -0.5
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0.5647059)
+
+[node name="NotePrompt" type="CanvasLayer" parent="." unique_id=601359416]
+visible = false
+
+[node name="ClipboardBG" type="ColorRect" parent="NotePrompt" unique_id=317071869]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -45.0
+offset_top = -58.0
+offset_right = 45.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.78, 0.74, 0.62, 0.95)
+
+[node name="ClipBar" type="ColorRect" parent="NotePrompt/ClipboardBG" unique_id=111111111]
+layout_mode = 0
+anchor_right = 1.0
+offset_bottom = 6.0
+color = Color(0.35, 0.32, 0.25, 1)
+
+[node name="Timestamp" type="Label" parent="NotePrompt/ClipboardBG" unique_id=222222222]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 8.0
+offset_right = 86.0
+offset_bottom = 18.0
+theme_override_colors/font_color = Color(0.3, 0.3, 0.2, 1)
+theme_override_font_sizes/font_size = 6
+text = "??:??"
+
+[node name="NoteInput" type="LineEdit" parent="NotePrompt/ClipboardBG" unique_id=840949303]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 18.0
+offset_right = 87.0
+offset_bottom = 32.0
+theme_override_colors/font_color = Color(0.15, 0.15, 0.1, 1)
+theme_override_colors/font_placeholder_color = Color(0.5, 0.48, 0.38, 0.6)
+theme_override_font_sizes/font_size = 7
+placeholder_text = "note observation..."
+
+[node name="HintLabel" type="Label" parent="NotePrompt/ClipboardBG" unique_id=333333333]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 36.0
+offset_right = 86.0
+offset_bottom = 46.0
+theme_override_colors/font_color = Color(0.4, 0.38, 0.28, 0.8)
+theme_override_font_sizes/font_size = 5
+text = "[ENTER] confirm  [ESC] cancel"
+
+[node name="JournalPanel" type="CanvasLayer" parent="." unique_id=496767224]
+visible = false
+
+[node name="Panel" type="Panel" parent="JournalPanel" unique_id=610715886]
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="JournalPanel/Panel" unique_id=69332420]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBox" type="VBoxContainer" parent="JournalPanel/Panel/ScrollContainer" unique_id=1049178932]
+layout_mode = 2
+
+[node name="AnomalyPicker" type="CanvasLayer" parent="." unique_id=444444444]
+visible = false
+
+[node name="ButtonRow" type="HBoxContainer" parent="AnomalyPicker" unique_id=555555555]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -48.0
+offset_top = -70.0
+offset_right = 48.0
+offset_bottom = -58.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 2
+
+[node name="BtnLight" type="Button" parent="AnomalyPicker/ButtonRow" unique_id=600000001]
+custom_minimum_size = Vector2(14, 14)
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "L"
+
+[node name="BtnMoved" type="Button" parent="AnomalyPicker/ButtonRow" unique_id=600000002]
+custom_minimum_size = Vector2(14, 14)
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "M"
+
+[node name="BtnSound" type="Button" parent="AnomalyPicker/ButtonRow" unique_id=600000003]
+custom_minimum_size = Vector2(14, 14)
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "S"
+
+[node name="BtnMissing" type="Button" parent="AnomalyPicker/ButtonRow" unique_id=600000004]
+custom_minimum_size = Vector2(14, 14)
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "X"
+
+[node name="BtnVisual" type="Button" parent="AnomalyPicker/ButtonRow" unique_id=600000005]
+custom_minimum_size = Vector2(14, 14)
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "V"
+
+[node name="BtnDoc" type="Button" parent="AnomalyPicker/ButtonRow" unique_id=600000006]
+custom_minimum_size = Vector2(14, 14)
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "D"
