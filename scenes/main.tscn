@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://b2blm2cib6oui" path="res://scenes/hud.tscn" id="8_5vw27"]
 [ext_resource type="Script" uid="uid://bjl5j1hmlueqb" path="res://scripts/clock.gd" id="11_ya4ey"]
 [ext_resource type="Script" uid="uid://buwap18v7rue4" path="res://scripts/degredation.gd" id="12_eb6dy"]
+[ext_resource type="Script" uid="uid://c0sqqi2fqd2n5" path="res://scenes/apr_fools.gd" id="15_jkv2x"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1bvp3"]
 radius = 0.5527344
@@ -158,7 +159,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.54081535, 0)
 shape = SubResource("BoxShape3D_trceg")
 
 [node name="Evil Grape" type="RigidBody3D" parent="." unique_id=147959151]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.214002, 0, -2.2920375)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.214002, 31.658844, -2.2920375)
+script = ExtResource("15_jkv2x")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Evil Grape" unique_id=272025752]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96695554, 0)
