@@ -51,6 +51,24 @@ The terminal is also how you piece together **what actually happened in Greenlan
 
 ---
 
+**THE BEHAVIORAL COMPLIANCE MONITOR (BCM)**
+
+The Station itself is your manager. The BCM is an AI entity built into your HUD that treats your survival as a Performance Review. It issues "Directives" that you must follow to maintain your "Professionalism Score."
+
+- **Directives:** Arbitrary rules that appear on your HUD (e.g., "Directive 402: Flashlight usage is prohibited in the Mess Hall").
+- **Corrections:** If you violate a directive, the BCM enforces compliance physically (e.g., locking your camera downward for "posture correction," or disabling your sprint to "demonstrate restraint").
+- **Visual Redactions:** Looking at "Unauthorized Content" (certain severe anomalies) causes the BCM to spawn 3D "REDACTED" boxes that float in your field of view, blocking the anomaly.
+
+---
+
+**THE BIOMETRIC HEARTBEAT (Small Addition)**
+
+The player's suit monitors their vitals. As stamina drops or tension rises, a heartbeat pulse is applied to the camera FOV and screen-shake, creating a physical sense of panic without a UI bar.
+- **Pulse Speed:** Increases as stamina decreases.
+- **Pulse Intensity:** Increases as composure drops.
+
+---
+
 **THE ESCALATION ARC**
 
 - **Days 1-2:** Subtle wrongness. You question yourself.

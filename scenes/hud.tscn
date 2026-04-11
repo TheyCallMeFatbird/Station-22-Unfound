@@ -55,6 +55,18 @@ offset_right = 50.0
 grow_vertical = 0
 pivot_offset = Vector2(12, -12)
 
+[node name="ComposureBar" type="TextureProgressBar" parent="." unique_id=611778211]
+custom_minimum_size = Vector2(50, 4)
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -34.0
+offset_right = 60.0
+offset_bottom = -30.0
+grow_vertical = 0
+pivot_offset = Vector2(12, -12)
+
 [node name="Crosshair" type="ColorRect" parent="." unique_id=352832615]
 anchors_preset = 8
 anchor_left = 0.5

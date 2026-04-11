@@ -12,7 +12,7 @@ extends CanvasLayer
 @onready var note_timestamp: Label = $NotePrompt/ClipboardBG/Timestamp
 @onready var journal_panel = $JournalPanel
 @onready var journal_list: VBoxContainer = $JournalPanel/Panel/ScrollContainer/VBox
-
+@onready var composure_bar: TextureProgressBar = $ComposureBar
 @onready var anomaly_picker = $AnomalyPicker
 @onready var btn_light = $AnomalyPicker/ButtonGrid/BtnLight
 @onready var btn_moved = $AnomalyPicker/ButtonGrid/BtnMoved
@@ -25,8 +25,22 @@ var clipboard_mesh: Sprite3D = null
 var panic_pulse_time = 0.0
 var panic_pulse_cooldown = 0.0
 var clipboard_text: Label3D = null
+
+# Composure
+var composure := 100.0
+const MAX_COMPOSURE := 100.0
+const DARK_DRAIN_RATE := 2.5       # per second in darkness
+const STILL_DRAIN_RATE := 1.5      # per second standing still too long
+const STILL_THRESHOLD := 8.0       # seconds before still-drain kicks in
+const COMPOSURE_REGEN_RATE := 1.0  # per second when conditions are fine
+var still_timer := 0.0
+var _last_player_pos := Vector3.ZERO
+
+
 func _ready():
+	print("composure_bar: ", composure_bar)
 	stamina_bar.modulate.a = 0.0
+	composure_bar.modulate.a = 1.0
 	blur_overlay.modulate.a = 0.0
 	_build_bar_texture()
 	
@@ -79,6 +93,22 @@ func _build_bar_texture():
 	bg_img.fill(Color(0.1, 0.1, 0.1, 0.6))
 	stamina_bar.texture_under = ImageTexture.create_from_image(bg_img)
 
+func _build_composure_texture():
+	var w = 50
+	var h = int(composure_bar.custom_minimum_size.y)
+	if h <= 0:
+		h = 4
+	var img = Image.create(w, h, false, Image.FORMAT_RGBA8)
+	var half = h / 2
+	for y in range(h):
+		var col = Color(0.72, 0.62, 0.85, 1.0) if y < half else Color(0.55, 0.45, 0.70, 1.0)
+		for x in range(w):
+			img.set_pixel(x, y, col)
+	composure_bar.texture_progress = ImageTexture.create_from_image(img)
+	var bg_img = Image.create(w, h, false, Image.FORMAT_RGBA8)
+	bg_img.fill(Color(0.1, 0.1, 0.1, 0.6))
+	composure_bar.texture_under = ImageTexture.create_from_image(bg_img)
+
 func update_effects(stamina_pct: float, is_sprinting: bool, delta: float, vignette_intensity: float) -> float:
 	# Vignette
 	var low = stamina_pct < 0.35
@@ -105,6 +135,45 @@ func update_effects(stamina_pct: float, is_sprinting: bool, delta: float, vignet
 	# no color changes, stays blue
 
 	return vignette_intensity
+
+func update_composure(delta: float, in_dark: bool, player_pos: Vector3):
+	#print("composure: ", composure, " in_dark: ", in_dark)
+	# Still timer
+	var moved = player_pos.distance_to(_last_player_pos) > 0.05
+	_last_player_pos = player_pos
+	if moved:
+		still_timer = 0.0
+	else:
+		still_timer += delta
+
+	var draining := false
+
+	if in_dark:
+		composure -= DARK_DRAIN_RATE * delta
+		draining = true
+
+	if still_timer > STILL_THRESHOLD:
+		composure -= STILL_DRAIN_RATE * delta
+		draining = true
+
+	if not draining:
+		composure += COMPOSURE_REGEN_RATE * delta
+
+	composure = clamp(composure, 0.0, MAX_COMPOSURE)
+
+	var pct = composure / MAX_COMPOSURE
+	var target_alpha = 0.0 if pct >= 1.0 else 1.0
+	composure_bar.modulate.a = lerp(composure_bar.modulate.a, target_alpha, delta * 4.0)
+	composure_bar.value = pct * 100.0
+
+func drain_composure(amount: float):
+	composure = max(composure - amount, 0.0)
+
+func pulse_jumpscare(amount: float = 25.0):
+	drain_composure(amount)
+	# flash the blur overlay as a scare cue
+	blur_overlay.modulate.a = 0.5
+	panic_pulse_time = 0.2
 
 var journal_open := false
 var prompt_open := false

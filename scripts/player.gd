@@ -39,9 +39,12 @@ var slowdown_timer := 0.0
 const POST_OBSERVE_SLOWDOWN := 1.2  # seconds
 
 var rotation_x = 0.0
+var base_fov = 75.0
+var heart_timer = 0.0
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	base_fov = camera.fov
 	flicker_loop()
 	call_deferred("_init_hud")
 	print("el horror is ready")
@@ -59,7 +62,7 @@ func _input(event):
 
 	if event is InputEventMouseButton:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
+	
 	if event.is_action_pressed("flashlight_toggle"):
 		flashlight.visible = !flashlight.visible
 		flashlight_sound.play()
@@ -77,8 +80,16 @@ func _physics_process(delta):
 	handle_stamina(delta)
 	handle_movement(delta)
 	handle_head_bob(delta)
+	handle_heartbeat(delta)
 	update_effects(delta)
 	handle_footsteps(delta)
+	update_composure(delta)
+
+func update_composure(delta: float):
+	if not hud:
+		return
+	var in_dark = not flashlight.visible
+	hud.update_composure(delta, in_dark, global_position)
 
 func get_input_direction() -> Vector3:
 	var direction = Vector3.ZERO
@@ -91,6 +102,28 @@ func get_input_direction() -> Vector3:
 	if Input.is_action_pressed("move_right"):
 		direction += transform.basis.x
 	return direction.normalized()
+
+func handle_heartbeat(delta: float):
+	var stamina_pct = stamina / max_stamina
+	# Heart rate increases as stamina decreases
+	var heart_rate = lerp(3.5, 0.8, stamina_pct) 
+	heart_timer += delta * heart_rate
+	
+	# Sin wave for the pulse
+	var pulse = pow(abs(sin(heart_timer * PI)), 4.0) # Sharper pulse
+	
+	# Intensity scales with low stamina
+	var intensity = 0.0
+	if stamina_pct < 0.4:
+		intensity = lerp(1.0, 0.0, (stamina_pct - 0.1) / 0.3)
+	intensity = clamp(intensity, 0.0, 1.0)
+	
+	# Apply to FOV
+	camera.fov = lerp(camera.fov, base_fov + (pulse * intensity * 4.0), delta * 10.0)
+	
+	# Apply to vignette in HUD if possible
+	if hud and intensity > 0.2:
+		hud.vignette.modulate.a = lerp(hud.vignette.modulate.a, 0.5 + (pulse * 0.5), delta * 5.0)
 
 
 func handle_stamina(delta):
