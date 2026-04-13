@@ -39,8 +39,12 @@ var _last_player_pos := Vector3.ZERO
 
 func _ready():
 	print("composure_bar: ", composure_bar)
+	print("composure_bar position: ", composure_bar.global_position)
+	print("composure_bar size: ", composure_bar.size)
+	print("composure_bar visible: ", composure_bar.visible)
 	stamina_bar.modulate.a = 0.0
 	composure_bar.modulate.a = 1.0
+	composure_bar.value = 50.0
 	blur_overlay.modulate.a = 0.0
 	_build_bar_texture()
 	

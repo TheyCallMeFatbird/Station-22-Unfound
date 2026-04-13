@@ -1,0 +1,149 @@
+[gd_scene format=3 uid="uid://d1bbrjr7c5p6j"]
+
+[ext_resource type="Script" uid="uid://crtl0r4587krn" path="res://scripts/main_menu.gd" id="1_menu"]
+[ext_resource type="FontFile" uid="uid://vone0fx04o4k" path="res://fonts/Share_Tech_Mono/ShareTechMono-Regular.ttf" id="2_menu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+bg_color = Color(1, 1, 1, 0.07)
+border_width_left = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pressed"]
+bg_color = Color(1, 1, 1, 0.15)
+border_width_left = 2
+border_color = Color(1, 1, 1, 0.6)
+
+[sub_resource type="Theme" id="Theme_buttons"]
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/colors/font_disabled_color = Color(1, 1, 1, 0.3)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 0.6)
+Button/font_sizes/font_size = 13
+Button/fonts/font = ExtResource("2_menu")
+Button/styles/disabled = SubResource("StyleBoxFlat_btn_normal")
+Button/styles/focus = SubResource("StyleBoxFlat_btn_normal")
+Button/styles/hover = SubResource("StyleBoxFlat_btn_hover")
+Button/styles/normal = SubResource("StyleBoxFlat_btn_normal")
+Button/styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+
+[node name="MainMenu" type="CanvasLayer" unique_id=100000001]
+script = ExtResource("1_menu")
+
+[node name="Background" type="ColorRect" parent="." unique_id=100000002]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ContentVBox" type="VBoxContainer" parent="." unique_id=100000003]
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.5
+anchor_right = 0.1
+anchor_bottom = 0.5
+offset_top = -60.0
+offset_right = 200.0
+offset_bottom = 60.0
+grow_vertical = 2
+theme_override_constants/separation = 1
+
+[node name="TitleLabel" type="Label" parent="ContentVBox" unique_id=100000004]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_menu")
+theme_override_font_sizes/font_size = 18
+text = "STATION 22"
+
+[node name="SubLabel" type="Label" parent="ContentVBox" unique_id=100000005]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
+theme_override_fonts/font = ExtResource("2_menu")
+theme_override_font_sizes/font_size = 10
+text = "UNFOUND"
+
+[node name="Spacer" type="Control" parent="ContentVBox" unique_id=100000006]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+
+[node name="PlayBtn" type="Button" parent="ContentVBox" unique_id=100000007]
+custom_minimum_size = Vector2(110, 22)
+layout_mode = 2
+theme = SubResource("Theme_buttons")
+text = "PLAY"
+
+[node name="Spacer2" type="Control" parent="ContentVBox" unique_id=100000008]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="CreditsBtn" type="Button" parent="ContentVBox" unique_id=100000009]
+custom_minimum_size = Vector2(110, 22)
+layout_mode = 2
+theme = SubResource("Theme_buttons")
+text = "CREDITS"
+
+[node name="Spacer3" type="Control" parent="ContentVBox" unique_id=100000010]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="QuitBtn" type="Button" parent="ContentVBox" unique_id=100000011]
+custom_minimum_size = Vector2(110, 22)
+layout_mode = 2
+theme = SubResource("Theme_buttons")
+text = "QUIT"
+
+[node name="CreditsOverlay" type="ColorRect" parent="." unique_id=100000012]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CreditsVBox" type="VBoxContainer" parent="CreditsOverlay" unique_id=100000013]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.5
+anchor_right = 0.1
+anchor_bottom = 0.5
+offset_left = 0.39999962
+offset_top = -72.0
+offset_right = 220.4
+offset_bottom = 88.0
+theme_override_constants/separation = 6
+
+[node name="CreditsTitle" type="Label" parent="CreditsOverlay/CreditsVBox" unique_id=100000014]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_menu")
+theme_override_font_sizes/font_size = 11
+text = "CREDITS"
+
+[node name="CreditsText" type="Label" parent="CreditsOverlay/CreditsVBox" unique_id=100000016]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_fonts/font = ExtResource("2_menu")
+theme_override_font_sizes/font_size = 7
+text = "design & development
+[Julian Bradler]
+
+built with godot 4
+
+fonts
+share tech mono — OFL
+shadows into light — OFL"
+autowrap_mode = 2
+
+[node name="CreditsBackBtn" type="Button" parent="CreditsOverlay/CreditsVBox" unique_id=100000017]
+custom_minimum_size = Vector2(110, 22)
+layout_mode = 2
+theme = SubResource("Theme_buttons")
+text = "BACK"

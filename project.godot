@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Station 22 Unfound"
-run/main_scene="res://scenes/main.tscn"
+run/main_scene="res://scenes/main_menu.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://textures/icon.svg"
 
@@ -28,7 +28,7 @@ window/stretch/mode="viewport"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/ai_coding_assistant/plugin.cfg")
+enabled=PackedStringArray()
 
 [input]
 

@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://b2blm2cib6oui" path="res://scenes/hud.tscn" id="8_5vw27"]
 [ext_resource type="Script" uid="uid://bjl5j1hmlueqb" path="res://scripts/clock.gd" id="11_ya4ey"]
 [ext_resource type="Script" uid="uid://buwap18v7rue4" path="res://scripts/degredation.gd" id="12_eb6dy"]
-[ext_resource type="Script" uid="uid://c0sqqi2fqd2n5" path="res://scenes/apr_fools.gd" id="15_jkv2x"]
+[ext_resource type="Script" uid="uid://c0sqqi2fqd2n5" path="res://scripts/apr_fools.gd" id="15_jkv2x"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1bvp3"]
 radius = 0.5527344
@@ -134,28 +134,31 @@ font_size = 60
 
 [node name="Floor" type="CSGBox3D" parent="." unique_id=305877844]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.07165527, 0)
+visible = false
 use_collision = true
 size = Vector3(10.33374, 0.04663086, 10.957031)
 
 [node name="Wall" type="CSGBox3D" parent="." unique_id=609510026]
 transform = Transform3D(0.85573477, 0, 0.51741487, 0, 1, 0, -0.51741487, 0, 0.85573477, -5.5373907, 0.4874878, -5.3921075)
+visible = false
 use_collision = true
 size = Vector3(9.779175, 7.2489014, 0.001)
 material = SubResource("StandardMaterial3D_ya4ey")
 
 [node name="Label3D" type="Label3D" parent="." unique_id=1215400383]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9675474, 1.5882549, -6.074845)
+visible = false
 text = "00:00"
 font = ExtResource("7_5vw27")
 font_size = 62
 script = ExtResource("11_ya4ey")
 
-[node name="Degredation3D" type="Area3D" parent="." unique_id=164388820]
+[node name="Degredation" type="Area3D" parent="." unique_id=164388820]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7.4356203, 0)
 script = ExtResource("12_eb6dy")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Degredation3D" unique_id=106469307]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.54081535, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Degredation" unique_id=106469307]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, -0.54081535, 0)
 shape = SubResource("BoxShape3D_trceg")
 
 [node name="Evil Grape" type="RigidBody3D" parent="." unique_id=147959151]
@@ -175,3 +178,74 @@ text = "evil grape"
 transform = Transform3D(1.2166264, 0, 0, 0, 1.1894588, 0, 0, 0, 1.2066475, 0, 0.96908534, 0)
 mesh = SubResource("SphereMesh_jkv2x")
 surface_material_override/0 = SubResource("StandardMaterial3D_jbj1t")
+
+[node name="MapDraft" type="Node3D" parent="." unique_id=1898586548]
+
+[node name="CtrlRoom" type="CSGCylinder3D" parent="MapDraft" unique_id=326659938]
+transform = Transform3D(18, 0, 0, 0, 0.1, 0, 0, 0, 18, 0, -0.09675157, -2.3382716)
+use_collision = true
+radius = 1.0014648
+height = 1.0
+sides = 64
+
+[node name="WeatherCenter" type="CSGCylinder3D" parent="MapDraft" unique_id=600021263]
+transform = Transform3D(18, 0, 0, 0, 0.1, 0, 0, 0, 18, -48.242996, 9.770043, -62.862846)
+use_collision = true
+radius = 1.0014648
+height = 1.0
+sides = 64
+
+[node name="Hallway2" type="CSGBox3D" parent="MapDraft" unique_id=1456460338]
+transform = Transform3D(0.7585667, 0, -0.6515955, 0, 0.1, 0, 0.6515955, 0, 0.7585667, -30.225876, -0.09693599, 59.68224)
+use_collision = true
+size = Vector3(5, 1, 31.07698)
+
+[node name="Hallway3" type="CSGBox3D" parent="MapDraft" unique_id=84087918]
+transform = Transform3D(0.7585667, 0, -0.6515955, 0, 0.1, 0, 0.6515955, 0, 0.7585667, -7.956925, -0.111097574, 23.09349)
+use_collision = true
+size = Vector3(5, 1, 30.784657)
+
+[node name="Hallway6" type="CSGBox3D" parent="MapDraft" unique_id=2017781688]
+transform = Transform3D(1, 0, 0, 0, 0.1, 0, 0, 0, 1, -51.78586, -0.09693599, 38.047432)
+use_collision = true
+size = Vector3(5, 1, 48.457546)
+
+[node name="Hallway9" type="CSGBox3D" parent="MapDraft" unique_id=1414795456]
+transform = Transform3D(1, 0, 0, 0, 0.1, 0, 0, 0, 1, -51.78586, -0.09693599, -37.26014)
+use_collision = true
+size = Vector3(5, 1, 36.640884)
+
+[node name="Hallway8" type="CSGBox3D" parent="MapDraft" unique_id=139877925]
+transform = Transform3D(1, 0, 0, 0, 0.09827229, 0.1850835, 0, -0.01850835, 0.9827228, -108.049164, -4.5982537, -23.77538)
+use_collision = true
+size = Vector3(5, 1, 48.6542)
+
+[node name="Hallway4" type="CSGBox3D" parent="MapDraft" unique_id=1243543843]
+transform = Transform3D(-4.3711385e-08, 0, -0.99999994, 0, 0.1, 0, 0.99999994, 0, -4.3711385e-08, -25.592484, -0.09693599, -2.25506)
+use_collision = true
+size = Vector3(5, 1, 32.106777)
+
+[node name="Hallway7" type="CSGBox3D" parent="MapDraft" unique_id=1301920678]
+transform = Transform3D(-4.3711385e-08, 0, -0.99999994, 0, 0.1, 0, 0.99999994, 0, -4.3711385e-08, -71.078255, -0.09693599, 37.58476)
+use_collision = true
+size = Vector3(5, 1, 33.58751)
+
+[node name="Cafeteria" type="CSGBox3D" parent="MapDraft" unique_id=2091716105]
+transform = Transform3D(-4.3711385e-08, 0, -0.99999994, 0, 0.1, 0, 0.99999994, 0, -4.3711385e-08, -52.078186, -0.09693599, -2.6381323)
+use_collision = true
+size = Vector3(33.691498, 1, 25.04817)
+
+[node name="Quarters" type="CSGBox3D" parent="MapDraft" unique_id=133166047]
+transform = Transform3D(-4.3711385e-08, 0, -0.99999994, 0, 0.1, 0, 0.99999994, 0, -4.3711385e-08, -107.90313, -0.09693599, 37.528244)
+use_collision = true
+size = Vector3(74.87402, 1, 40.150635)
+
+[node name="ElectricalRoom" type="CSGBox3D" parent="MapDraft" unique_id=1679041719]
+transform = Transform3D(0.7585667, 0, -0.6515955, 0, 0.1, 0, 0.6515955, 0, 0.7585667, -16.63329, -0.09693599, 43.601948)
+use_collision = true
+size = Vector3(18.50777, 1, 11.667622)
+
+[node name="LDBay-1" type="CSGBox3D" parent="MapDraft" unique_id=2047413676]
+transform = Transform3D(0.7585667, 0, -0.6515955, 0, 0.1, 0, 0.6515955, 0, 0.7585667, -50.153805, -0.09693599, 81.12391)
+use_collision = true
+size = Vector3(30.977291, 1, 30.96412)
